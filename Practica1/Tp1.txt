@@ -1,0 +1,13 @@
+1) Identifique la capa del modelo OSI que maneja los siguientes aspectos:  
+a) Establece el método de acceso al medio.  
+Enlace de datos (Capa 2). Se encarga de la comunicacion correcta (moderador) entre los dispositivos de una red, asegurando que cada salto entre dos dispositivos vecinos se haga correctamente y sin errores.
+b) Determinar que ruta seguirán los paquetes a través de la red.
+Capa de Red (Capa 3). Elige la mejor ruta para llevar el paquete desde el origen hacia su destino.
+c) Codificación de datos en forma estándar. 
+Presentacion (Capa 6). Se encarga de que la información transmitida se entienda correctamente en ambos extremos. Traduce la informacion a un formato comun y estandar antes de enviarlos, y al recibirlos los tambien, todo con el fin de que el receptor pueda interpretarlo. A su vez incluye cifrado (seguridad) o compresion (ahorro de espacio).
+
+2) Indique con que capa se identifican estos términos: 
+a) Frame -> 
+b) Datagrama 
+c) Segmento 
+d) Paquete
