@@ -1,13 +1,140 @@
 1) Identifique la capa del modelo OSI que maneja los siguientes aspectos:  
 a) Establece el método de acceso al medio.  
-Enlace de datos (Capa 2). Se encarga de la comunicacion correcta (moderador) entre los dispositivos de una red, asegurando que cada salto entre dos dispositivos vecinos se haga correctamente y sin errores.
+Enlace de datos (Capa 2). Se encarga de la comunicacion correcta (hace de moderador) entre los dispositivos de una red, asegurando que cada salto entre dos dispositivos vecinos se haga correctamente y sin errores.
 b) Determinar que ruta seguirán los paquetes a través de la red.
 Capa de Red (Capa 3). Elige la mejor ruta para llevar el paquete desde el origen hacia su destino.
 c) Codificación de datos en forma estándar. 
-Presentacion (Capa 6). Se encarga de que la información transmitida se entienda correctamente en ambos extremos. Traduce la informacion a un formato comun y estandar antes de enviarlos, y al recibirlos los tambien, todo con el fin de que el receptor pueda interpretarlo. A su vez incluye cifrado (seguridad) o compresion (ahorro de espacio).
+Presentacion (Capa 6). Se encarga de que la información transmitida se entienda correctamente en ambos extremos. Traduce la informacion a un formato comun y estandar antes de enviarlos, y al recibirlosb tambien, todo con el fin de que el receptor pueda interpretarlo. A su vez incluye cifrado (seguridad) o compresion (ahorro de espacio).
 
 2) Indique con que capa se identifican estos términos: 
-a) Frame -> 
-b) Datagrama 
-c) Segmento 
-d) Paquete
+Cada capa tiene una unidad de datos o tambien llamado PDU-Protocol Data Unit. Estas unidades dependen de la capa en la que nos encontremos. Para las siguientes:
+a) Frame/Trama -> PDU asociado a la capa de Enlace de Datos.
+b) Datagrama -> PDU asociado a la capa de Transporte (UDP) .
+c) Segmento -> PDU asociado a la capa de Transporte (TCP)
+d) Paquete/Datagrama IP-> PDU asociado a la capa de Red.
+
+Diferencias entre UDP y TCP. Ambos protocolos de la capa de transporte. 
+
+TCP (Transmission Control Protocol)
+
+-Protocolo orientado a conexión.
+-Garantiza que los datos lleguen completos, en orden y sin errores.
+-Ejemplo: cuando navegás por internet o descargás un archivo.
+-PDU: Segmento.
+
+UDP (User Datagram Protocol)
+
+-Protocolo sin conexión.
+-No garantiza entrega ni orden, solo envía los datos tal cual.
+-Más rápido y con menos overhead.
+-Ejemplo: streaming de video, videojuegos online, DNS.
+-PDU: Datagrama.
+
+3) ¿Cuál es la capa del modelo OSI que se encarga de la comunicación de red
+confiable entre nodos finales y proporciona mecanismos para establecer, mantener
+y terminar circuitos virtuales, detección y recuperación de errores de transporte y
+control de flujo de información? Justifique su respuesta.
+a) Capa física
+b) Capa de enlace de datos
+c) Capa de red
+d) Capa de transporte -> Correcta
+
+Justificacion (GPT): 
+La capa de transporte (capa 4 en el modelo OSI) se encarga de:
+1.Comunicación confiable entre nodos finales
+Garantiza que los datos enviados desde un host lleguen correctamente al host destino.
+2.Establecer, mantener y terminar circuitos virtuales
+Ejemplo: TCP establece una conexión antes de enviar datos (handshake de 3 vías), mantiene la sesión mientras dura la comunicación y luego la cierra.
+3.Detección y recuperación de errores de transporte
+TCP usa números de secuencia y ACKs para asegurarse de que los segmentos lleguen completos.
+4.Control de flujo de información
+Evita que el receptor se sature enviando datos más rápido de lo que puede procesar.
+
+Por qué no son las otras capas:
+Capa física → solo transmite bits por el medio físico.
+Capa de enlace de datos → garantiza la transmisión confiable entre nodos directamente conectados, no entre hosts finales de una red extensa.
+Capa de red → se encarga de enrutamiento y direccionamiento, no de garantizar fiabilidad ni control de flujo extremo.
+
+4) ¿Cuál de las siguientes opciones describe mejor la función de la capa de
+presentación? Justifique su respuesta.
+a) Es responsable de la comunicación confiable de red entre nodos finales
+b) Se ocupa de las estructuras de datos y de la sintaxis de transferencia de datos
+de negociación -> Correcta
+c) Proporciona conectividad y selección de rutas entre dos sistemas finales
+d) Administra el intercambio de datos entre capas
+
+Justificación
+La capa de presentación (capa 6 del modelo OSI) se encarga de:
+1.Representación de datos
+-Convierte los datos de la aplicación a un formato estándar que pueda entender el receptor, por ejemplo:
+-Codificación de caracteres (ASCII, Unicode)
+-Formato de números (big-endian, little-endian)
+-Formato de archivos (JPEG, MPEG, etc.)
+2.Traducción y negociación de formatos
+-Si dos sistemas usan formatos distintos, la capa de presentación traduce los datos para que ambos puedan interpretarlos correctamente.
+3.Compresión y cifrado (opcional)
+-También puede encargarse de comprimir datos o cifrarlos antes de enviarlos y descifrarlos al recibirlos.
+
+5) En el modelo TCP/IP ¿qué capa se encarga de resolver los conflictos que se
+generan cuando se intenta enviar un paquete a través de distintas redes?
+a) Transporte
+b) Internet -> Cuando hay varias rutas posibles o varios dispositivos intentando enviar paquetes, la capa de Internet usa algoritmos de enrutamiento y tablas de rutas para evitar colisiones y determinar la mejor ruta.
+c) Acceso a Red
+d) Aplicación 
+
+6) ¿Qué capas del modelo OSI debe implementar una tarjeta de red (NIC)? 
+Una tarjeta de red (NIC, Network Interface Card) es un hardware que permite a un dispositivo conectarse a una red.
+Funciones principales:
+1.Conexión física a la red
+Puede ser mediante cable (Ethernet) o inalámbrica (Wi-Fi).
+2.Encapsulamiento y transmisión de datos
+Toma los datos de la computadora y los convierte en tramas de la capa de enlace para enviarlos por el medio físico.
+También recibe tramas de la red y las convierte en datos que el sistema puede procesar.
+3.Identificación en la red
+Cada NIC tiene una dirección MAC única que identifica al dispositivo en la red local.
+4.Control de errores y flujo
+Detecta errores en la transmisión (checksum de la capa de enlace).
+Puede controlar la velocidad de transmisión según la capacidad de la red y del dispositivo.
+
+Una tarjeta de red (NIC) aunque es hardware, implementa funciones de las capas fisicas y de enlace de datos (Capa 1 y 2). Ya que transmite y recibe bits a traves del medio (cable, fibra, aire), define estandares como Ethernet, Wi-Fi, velocidades de transmision y ademas encapsula los datos en tramas/frames, controla errores y acceso al medio.
+
+7) ¿Cuál es el orden correcto de los pasos del proceso de encapsulamiento? Justifique
+su respuesta.
+a) Bits, datos, paquetes, tramas 
+b) Datos, tramas, paquetes, segmentos, bits
+c) Datos, segmentos, paquetes, tramas, bits -> Correcta
+d) Bits, tramas, datos, paquetes
+
+El proceso de encapsulamiento se realiza de arriba hacia abajo (desencapsulamiento viceversa). 
+
+1.Datos (Aplicación)
+La capa de aplicación genera la información que queremos enviar (texto, imagen, video, etc.).
+2.Segmentos (Transporte)
+La capa de transporte divide los datos en segmentos (TCP) o datagramas (UDP) y agrega cabeceras con información de puertos y control de flujo.
+3.Paquetes (Red / Internet)
+La capa de red agrega la dirección IP de origen y destino, creando el paquete o datagrama IP.
+4.Tramas (Enlace de Datos)
+La capa de enlace de datos encapsula los paquetes en tramas, agregando dirección MAC y control de errores (CRC).
+5.Bits (Física)
+Finalmente, la capa física convierte las tramas en bits eléctricos, ópticos o de radio para transmitirlos por el medio.
+
+Extra -> Direccion MAC - Media Acces Control
+Es un identificador único asignado a cada tarjeta de red (NIC).
+Sirve para identificar un dispositivo dentro de una red local (LAN).
+Es un número de 48 bits (6 bytes), normalmente escrito en hexadecimal:
+00:1A:2B:3C:4D:5E
+
+Para qué sirve ?
+1.Identificación en la red local
+Cada dispositivo en la misma red tiene una MAC distinta, así los switches saben a dónde enviar cada trama.
+2.Control de acceso al medio
+Permite que la capa de enlace de datos decida quién puede enviar datos en un momento dado.
+3.Filtrado y seguridad
+Se pueden configurar routers y switches para permitir o bloquear dispositivos según su MAC.
+
+📌 Diferencia con la dirección IP
+Característica	              MAC	                                       IP
+Capa OSI	            Enlace de datos (2)	                             Red (3)
+Fija o cambiante	    Normalmente fija (grabada en hardware)	 Asignada por red, puede cambiar
+Alcance	              Red local	                               Internet / redes interconectadas
+Formato	              48 bits hexadecimal	                      IPv4: 32 bits, IPv6: 128 bits
