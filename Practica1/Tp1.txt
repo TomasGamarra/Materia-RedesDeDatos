@@ -138,3 +138,59 @@ Capa OSI	            Enlace de datos (2)	                             Red (3)
 Fija o cambiante	    Normalmente fija (grabada en hardware)	 Asignada por red, puede cambiar
 Alcance	              Red local	                               Internet / redes interconectadas
 Formato	              48 bits hexadecimal	                      IPv4: 32 bits, IPv6: 128 bits
+
+8) El nivel de aplicación genera 40 bytes de información para ser transmitidas. Si cada capa del modelo OSI agrega 8 bytes de encabezamiento, determine la eficiencia de esta transmisión. ¿Y si genera 100 bytes de información ?
+Eficiencia -> Lo que sirve/ Total. Para nuestro caso lo que sirve serian los 40 bytes de informacion, mientras que el total serian los 40 bytes + 8*6 bytes (Teniendo en cuenta que las restantes 6 capas añaden informacion) = 88 bytes. Por lo que la eficiencia seria de un 40/88 que seria un 45%. En cambio con 100 bytes de informacion seria una eficiencia de 67%. Lo que nos dice que cuanto mayor sea la diferencia entre el tamaño de los bytes de informacion y el tamaño de los encabezados agregados, obtendremos mayor eficiencia (Es logico).
+
+9) Se desea transmitir 100 bytes de información. El sistema transmite 1 byte por
+segundo y las capas del modelo OSI agregan 1 byte de encabezamiento en total.
+Se decide segmentar la información y enviarla en tramas de 10 bytes.
+a) ¿Cuánto tiempo demorará en enviar toda la información?
+El byte de encabezamiento se agrega a cada trama que se envia (Capa de enlace de datos). Por lo que al ser 10 tramas de 10 bytes cada una + 1 byte de header. Tenemos en total 110 bytes a transmitir, por lo que el tiempo que demorara en enviarse la informacion sera de 110 seg.
+b) Si se decide segmentar en tramas de 4 bytes, ¿Cuánto demorará en este caso?
+Para este caso necesitaremos 25 tramas cada una con 1 byte de header, por lo que seran 125 bytes, es decir 125 segundos de transmision.
+c) Suponer que al inicio de la transmisión se genera ruido durante 1 segundo y eso
+provoca la pérdida de la información, por lo que se deberá retransmitir aquello
+que se perdió. Calcular nuevamente los puntos a y b.
+Habria que ver si ese ruido hace que se pierda la trama entera o solo hace que perdamos 1 byte de informacion. En el caso de que no se pierda la trama entera serian 111 segundos para el a) y 126 segundos para el b). Para el segundo caso (perdida de trama) lo que sucederia es que por ese segundo de ruido el receptor detecte un error en la transmision (checksum por ej) y se tenga que volver a enviar la trama completa, en este caso se perderian 10 segundos por esa trama invalida por lo que para el caso a) se tardarian 120 seg y para el caso b) se perderian 4 segundos por lo que se tardarian 129 segundos.
+d) Suponer ahora que hay 1 segundo de ruido al inicio y otro en la mitad de la
+transmisión. Volver a calcular a y b.
+
+10) Un sistema tiene una jerarquía de protocolos de n niveles. Las aplicaciones generan
+mensajes de 300 bytes de longitud. A cada uno de los niveles es necesario añadir
+una cabecera de 10 bytes.
+a) ¿Qué porcentaje de la tasa de la red se rellena con cabeceras? ¿Y en el caso
+de un modelo OSI?
+El porcentaje que representan las cabeceras respecto de la cantidad total de bytes transmitidos es 10 x (n-1) x 100 / (300 + 10 x(n-1)). Para el caso de modelo OSI seria N=7. (Considere n-1 capas para agregar headers ya que la capa fisica no añade header) 
+Idea clave -> Cada capa agrega su overhead, mientras más capas tengas, mayor porcentaje de cabeceras, menor eficiencia.
+b) Si no se quiere perder más del 10% de la capacidad (tasa de red) ¿Cuál es el
+tamaño máximo del campo de cabecera para cada capa (suponiendo que en
+todas es el mismo)? ¿Y en el caso de un modelo OSI?
+Si no queremos perder mas del 10% de capacidad de la tasa de red (ancho de banda), necesitamos un 90 % de eficiencia. De alli planteamos que D/D + (n-1) x h = 90 % siendo D los datos utiles y h el tamaño de la cabecera. De esa ecuacion despejamos h y tenemos el valor maximo que puede pesar la cabecera para obtener un 90 % de eficiencia, es decir para que los headers representen el 10% de la tasa de red como maximo. 
+
+
+11) Se desea transmitir un mensaje de 100000 bytes a través de un sistema basado en el modelo OSI. Suponer que el mensaje indicado se introduce directamente en la capa de trasporte (ya tiene incluidas sus cabeceras). A continuación, se indican las
+características de cada uno de los niveles involucrados.
+i) Nivel de transporte. El tamaño máximo de la SDU (unidad de datos del servicio) de transporte es de 1800 bytes. El protocolo de transporte utilizado introduce cabeceras de 8 bytes (PCI, información de control del protocolo)).
+ii) Nivel de red. El tamaño máximo de la SDU del nivel de red es de 65535 bytes. El protocolo utilizado es IP (Internet Protocol), que introduce cabeceras de 20 bytes (PCI).
+iii) Nivel de enlace. El nivel de enlace utilizado en el sistema introduce cabeceras de 6 bytes (PCI).
+iv) Nivel físico: no se introducen cabeceras (PCI). Se pide:
+a) Calcular el número de PDU´s de nivel de transporte que se generan, así como el tamaño de las SDU´s que se le van a pasar al nivel de red (IP), sabiendo que el nivel de transporte genera una PDU por cada SDU de transporte.
+b) Suponiendo que el tamaño máximo de SDU que acepta el nivel de enlace es de 4096 bytes, calcular el porcentaje de la capacidad del medio que se dedica a transmitir cabeceras.
+c) Se sustituye ahora el nivel de enlace del punto anterior por otro nivel de enlace cuya SDU máxima es de 512 bytes. En estas condiciones la PDU de nivel 3 que se obtendría en la situación anterior es de un tamaño superior a la SDU máxima
+admisible por el nivel de enlace. Para resolver el problema, el nivel de red debe fragmentar la SDU a transmitir en unidades más pequeñas, con el fin de que puedan entregarse al interfaz del servicio del nivel de enlace. En el caso de IP, se puede resumir brevemente el procedimiento de fragmentación como sigue:
+i) Si el tamaño de la PDU de nivel de red que se tiene que enviar es menor o igual que el tamaño máximo de la SDU de nivel de enlace, no se hace fragmentación.
+ii) En caso contrario, el nivel IP fragmenta de la siguiente forma: se divide la SDU de nivel 3 en tantos fragmentos como sean necesarios, y cada uno de ellos se transmite en una PDU de nivel 3. El tamaño de cada una de estas PDU´s será igual al de la SDU máxima de nivel de enlace, excepto el de la última PDU, que puede que sea menor.
+En estas condiciones, se pide calcular el número de PDU´s de nivel de red que se generan por cada SDU de nivel de red, así como la longitud de cada una de las PDU´s. Calcule también el porcentaje de la capacidad del medio que se emplea en transmitir cabeceras durante la transferencia del mensaje.
+
+SDU - Service Data Unit 
+Es la unidad de datos que una capa recibe de la capa superior para transmitirla. Contiene unicamente datos utiles, sin encabezados de la capa actual.
+PDU - Protocol Data Unit
+Es la unidad de datos que la capa envia al nivel inferior. Esta compuesta del SDU + encabezado y/o trailer de la capa actual.
+PCI - Protocol Control Information
+Es la informacion de control que se añade a la SDU para formar la PDU. Esta compuesto de las cabeceras y trailers de la capa, los cuales permiten que la capa siguiente: 
+-Identifique la SDU 
+-Detecte errores 
+-Control de flujo
+
+PDU = SDU + PCI.
